@@ -1,0 +1,617 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future Kart Solutions — E-commerce & Quick Commerce Operations Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a09;
+    --panel:#141310;
+    --panel-2:#1b1a15;
+    --parchment:#ece5d6;
+    --gold:#c9a463;
+    --gold-bright:#e3c489;
+    --bronze:#453f30;
+    --muted:#8a8474;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--parchment);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces',serif;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  /* subtle grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;
+    opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(10,10,9,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--bronze);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;max-width:1180px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-mark{
+    width:34px;height:34px;border:1px solid var(--gold);border-radius:2px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;color:var(--gold);font-size:16px;
+  }
+  .logo-text{font-family:'Fraunces',serif;font-size:17px;letter-spacing:0.5px;color:var(--parchment);}
+  .logo-text span{color:var(--gold);}
+  .logo-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);display:block;margin-top:1px;}
+  .nav-links{display:flex;gap:36px;align-items:center;}
+  .nav-links a{font-size:13px;letter-spacing:0.5px;color:var(--parchment);opacity:0.85;transition:opacity .25s, color .25s;position:relative;}
+  .nav-links a:hover{opacity:1;color:var(--gold-bright);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 24px;border:1px solid var(--gold);border-radius:2px;
+    font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);
+    transition:all .3s ease;white-space:nowrap;
+  }
+  .btn:hover{background:var(--gold);color:var(--ink);}
+  .btn-solid{background:var(--gold);color:var(--ink);}
+  .btn-solid:hover{background:var(--gold-bright);border-color:var(--gold-bright);}
+  
+  .menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:5px;}
+  .menu-toggle span{width:22px;height:2px;background:var(--parchment);transition:0.3s;}
+
+  /* HERO */
+  .hero{
+    padding:190px 0 100px;
+    position:relative;
+    border-bottom:1px solid var(--bronze);
+  }
+  .hero::after{
+    content:"";position:absolute;top:0;right:0;width:45%;height:100%;
+    background:radial-gradient(ellipse at top right, rgba(201,164,99,0.10), transparent 65%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);
+    text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:28px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--gold);}
+  .hero h1{
+    font-size:clamp(38px,5.2vw,70px);
+    font-weight:400;line-height:1.08;letter-spacing:-0.5px;
+    max-width:850px;color:var(--parchment);
+  }
+  .hero h1 em{font-style:italic;color:var(--gold-bright);font-weight:300;}
+  .hero p.lead{
+    max-width:560px;margin-top:26px;font-size:17px;color:var(--muted);font-weight:300;
+  }
+  .hero-cta{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap;}
+
+  /* LEDGER STRIP */
+  .ledger{
+    margin-top:90px;border:1px solid var(--bronze);border-radius:3px;
+    background:var(--panel);overflow:hidden;
+  }
+  .ledger-head{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 24px;border-bottom:1px solid var(--bronze);
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;
+  }
+  .ledger-head .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block;margin-right:8px;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .ledger-row{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 0.8fr;
+    padding:15px 24px;border-bottom:1px solid rgba(69,63,48,0.5);
+    font-size:13.5px;align-items:center;
+    transition:background .3s;
+  }
+  .ledger-row:last-child{border-bottom:none;}
+  .ledger-row:hover{background:var(--panel-2);}
+  .ledger-row .platform{font-family:'Fraunces',serif;color:var(--parchment);}
+  .ledger-row .mono{color:var(--muted);}
+  .ledger-row .status{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1px;
+    color:var(--gold-bright);text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:6px;
+  }
+  .ledger-row .status::before{content:"✓";}
+  .ledger-foot{
+    padding:14px 24px;display:flex;justify-content:space-between;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;
+    background:var(--panel-2);
+  }
+  .ledger-foot b{color:var(--gold-bright);font-weight:500;}
+
+  /* MARQUEE */
+  .marquee-section{padding:44px 0;border-bottom:1px solid var(--bronze);}
+  .marquee-label{
+    text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:26px;
+  }
+  .marquee{overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);}
+  .marquee-track{display:flex;gap:64px;width:max-content;animation:scroll 28s linear infinite;}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .marquee-track span{
+    font-family:'Fraunces',serif;font-size:22px;color:var(--muted);opacity:0.6;white-space:nowrap;
+    letter-spacing:0.5px;
+  }
+
+  /* SECTION GENERIC */
+  section{padding:110px 0;}
+  .section-tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);
+    text-transform:uppercase;margin-bottom:18px;
+  }
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(28px,3.4vw,44px);font-weight:400;max-width:600px;line-height:1.15;}
+  .section-head p{max-width:360px;color:var(--muted);font-size:14.5px;font-weight:300;padding-bottom:4px;}
+
+  /* SERVICES */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bronze);border:1px solid var(--bronze);}
+  .service-card{background:var(--ink);padding:40px 32px;transition:background .35s;position:relative;}
+  .service-card:hover{background:var(--panel);}
+  .service-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;}
+  .service-card h3{font-size:21px;font-weight:400;margin:22px 0 14px;color:var(--parchment);}
+  .service-card p{font-size:14px;color:var(--muted);font-weight:300;line-height:1.7;}
+  .service-card .icon{
+    width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:var(--gold);margin-bottom:6px;
+    font-size:15px;
+  }
+
+  /* PROCESS */
+  .process-flow{display:flex;border-top:1px solid var(--bronze);}
+  .process-step{
+    flex:1;padding:36px 28px 0;border-right:1px solid var(--bronze);position:relative;
+  }
+  .process-step:last-child{border-right:none;}
+  .process-step::before{
+    content:"";position:absolute;top:-1px;left:0;height:1px;width:0;background:var(--gold);
+    transition:width .5s ease;
+  }
+  .process-step.in-view::before{width:100%;}
+  .process-index{font-family:'IBM Plex Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:1px;}
+  .process-step h4{font-size:18px;font-weight:400;margin:16px 0 10px;font-family:'Fraunces',serif;}
+  .process-step p{font-size:13px;color:var(--muted);font-weight:300;line-height:1.65;padding-bottom:36px;}
+
+  /* WHY */
+  .why-wrap{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px;align-items:center;}
+  .why-visual{
+    aspect-ratio:1/1.05;border:1px solid var(--bronze);border-radius:3px;background:var(--panel);
+    display:flex;flex-direction:column;justify-content:center;padding:44px;position:relative;overflow:hidden;
+  }
+  .why-visual::before{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(var(--bronze) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bronze) 1px, transparent 1px);
+    background-size:40px 40px;opacity:.25;
+  }
+  .why-stat{position:relative;margin-bottom:30px;}
+  .why-stat:last-child{margin-bottom:0;}
+  .why-stat .num{font-family:'Fraunces',serif;font-size:46px;color:var(--gold-bright);font-weight:400;line-height:1;}
+  .why-stat .lbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-top:8px;}
+  .why-list{display:flex;flex-direction:column;gap:0;}
+  .why-item{
+    display:flex;gap:22px;padding:26px 0;border-bottom:1px solid var(--bronze);
+  }
+  .why-item:first-child{padding-top:0;}
+  .why-item .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--gold);font-size:22px;flex-shrink:0;width:30px;}
+  .why-item h4{font-size:17px;font-weight:500;margin-bottom:8px;font-family:'Inter',sans-serif;}
+  .why-item p{font-size:14px;color:var(--muted);font-weight:300;}
+
+  /* REACH */
+  .reach{background:var(--panel);border-top:1px solid var(--bronze);border-bottom:1px solid var(--bronze);}
+  .reach-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center;}
+  .reach h2{font-size:clamp(26px,3vw,38px);font-weight:400;line-height:1.2;max-width:480px;}
+  .reach p{color:var(--muted);margin-top:20px;max-width:440px;font-weight:300;font-size:15px;}
+  .reach-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+  .reach-tags span{
+    border:1px solid var(--bronze);padding:8px 16px;border-radius:20px;font-size:12px;
+    font-family:'IBM Plex Mono',monospace;letter-spacing:0.5px;color:var(--parchment);
+  }
+  .reach-map{
+    aspect-ratio:4/3;border:1px solid var(--bronze);border-radius:3px;position:relative;overflow:hidden;
+    background:var(--ink);
+  }
+  .reach-map .pin{position:absolute;width:9px;height:9px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 6px rgba(201,164,99,0.15);}
+  .reach-map .pin::after{content:attr(data-label);position:absolute;top:14px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;}
+  .reach-map svg{position:absolute;inset:0;opacity:0.5;}
+
+  /* CONTACT */
+  .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+  .contact-left h2{font-size:clamp(30px,3.6vw,46px);font-weight:400;line-height:1.15;max-width:460px;}
+  .contact-left p{color:var(--muted);margin-top:22px;font-weight:300;max-width:400px;font-size:15px;}
+  .contact-detail{margin-top:44px;display:flex;flex-direction:column;gap:22px;}
+  .contact-detail div{border-top:1px solid var(--bronze);padding-top:16px;}
+  .contact-detail .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;}
+  .contact-detail .v{font-family:'Fraunces',serif;font-size:17px;margin-top:6px;color:var(--gold-bright);}
+  form{display:flex;flex-direction:column;gap:22px;}
+  .field{position:relative;}
+  .field label{
+    display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;margin-bottom:10px;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid var(--bronze);
+    color:var(--parchment);font-family:'Inter',sans-serif;font-size:15px;padding:10px 2px;
+    outline:none;transition:border-color .3s;
+  }
+  .field select option{background:var(--panel);}
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--gold);}
+  .field textarea{resize:none;min-height:70px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+
+  footer{border-top:1px solid var(--bronze);padding:50px 0 34px;}
+  .footer-grid{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:30px;}
+  .footer-links{display:flex;gap:30px;font-size:13px;color:var(--muted);}
+  .footer-links a:hover{color:var(--gold);}
+  .footer-bottom{
+    margin-top:36px;padding-top:24px;border-top:1px solid var(--bronze);
+    display:flex;justify-content:space-between;color:var(--muted);font-size:12px;flex-wrap:wrap;gap:10px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+
+  @media (max-width:860px){
+    .nav-links{
+      display:none;position:absolute;top:100%;left:0;right:0;
+      background:rgba(10,10,9,0.98);flex-direction:column;gap:20px;
+      padding:30px 20px;border-bottom:1px solid var(--bronze);
+    }
+    .nav-links.open{display:flex;}
+    .menu-toggle{display:flex;}
+    .services-grid{grid-template-columns:1fr;}
+    .process-flow{flex-direction:column;}
+    .process-step{border-right:none;border-bottom:1px solid var(--bronze);padding-bottom:20px;}
+    .why-wrap, .reach-grid, .contact-wrap{grid-template-columns:1fr;gap:44px;}
+    .ledger-row{grid-template-columns:1.4fr 1fr 1fr;font-size:12px;}
+    .ledger-row .mono:nth-child(3){display:none;}
+    .two-col{grid-template-columns:1fr;}
+    .hero{padding-top:150px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">
+      <div class="logo-mark">FK</div>
+      <div>
+        <div class="logo-text">FUTURE KART <span>SOLUTIONS</span></div>
+        <span class="logo-sub">OPERATIONS · INVOICING · RECONCILIATION</span>
+      </div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#why">Why Us</a>
+      <a href="#reach">Reach</a>
+      <a href="#contact" class="btn">Book a Consultation</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">E-commerce &amp; Quick Commerce Operations Partner</div>
+    <h1>Your brand sells.<br><em>We run</em> everything behind it.</h1>
+    <p class="lead">Future Kart Solutions is the end-to-end operations desk for brands selling across marketplaces and quick commerce — from onboarding and daily management to e-invoicing and reconciliation, handled with precision, for brands in India and abroad.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-solid">Book a Consultation</a>
+      <a href="#services" class="btn">See What We Manage</a>
+    </div>
+
+    <div class="ledger reveal">
+      <div class="ledger-head">
+        <span><span class="dot"></span>Live Reconciliation Snapshot</span>
+        <span>Illustrative view</span>
+      </div>
+      <div class="ledger-row">
+        <span class="platform">Amazon</span>
+        <span class="mono">Orders synced</span>
+        <span class="mono">Payouts matched</span>
+        <span class="mono">Invoices filed</span>
+        <span class="status">Reconciled</span>
+      </div>
+      <div class="ledger-row">
+        <span class="platform">Flipkart</span>
+        <span class="mono">Orders synced</span>
+        <span class="mono">Payouts matched</span>
+        <span class="mono">Invoices filed</span>
+        <span class="status">Reconciled</span>
+      </div>
+      <div class="ledger-row">
+        <span class="platform">Blinkit</span>
+        <span class="mono">Orders synced</span>
+        <span class="mono">Payouts matched</span>
+        <span class="mono">Invoices filed</span>
+        <span class="status">Reconciled</span>
+      </div>
+      <div class="ledger-row">
+        <span class="platform">Zepto / Instamart</span>
+        <span class="mono">Orders synced</span>
+        <span class="mono">Payouts matched</span>
+        <span class="mono">Invoices filed</span>
+        <span class="status">Reconciled</span>
+      </div>
+      <div class="ledger-foot">
+        <span>Every marketplace. One ledger.</span>
+        <span><b>Zero</b> unreconciled line items</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-label">Built for brands operating across</div>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Marketplaces</span><span>Quick Commerce</span><span>D2C Websites</span><span>Modern Trade</span><span>Cross-Border Distribution</span><span>Marketplaces</span><span>Quick Commerce</span><span>D2C Websites</span><span>Modern Trade</span><span>Cross-Border Distribution</span>
+    </div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-tag">What We Do</div>
+        <h2>One partner for the entire operation — not another vendor to manage.</h2>
+      </div>
+      <p>From strategy to the last reconciled rupee, we sit inside your operations so you don't have to hire six specialists for it.</p>
+    </div>
+
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="icon">◆</div>
+        <div class="service-num">01</div>
+        <h3>E-commerce &amp; Quick Commerce Consulting</h3>
+        <p>Go-to-market and growth strategy for marketplaces and quick commerce — platform selection, positioning, and scale-up planning built around your category.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">◆</div>
+        <div class="service-num">02</div>
+        <h3>End-to-End Account Management</h3>
+        <p>Daily operations across every platform — listings, inventory, pricing, ads, and escalations — run by one accountable team.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">◆</div>
+        <div class="service-num">03</div>
+        <h3>E-Invoicing</h3>
+        <p>Accurate, compliant invoicing generated for every order, across every marketplace and region, without manual chasing.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">◆</div>
+        <div class="service-num">04</div>
+        <h3>Payout &amp; Order Reconciliation</h3>
+        <p>Every order matched against every payout — claims, shortfalls, and deductions identified and recovered.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">◆</div>
+        <div class="service-num">05</div>
+        <h3>Catalog &amp; Listing Management</h3>
+        <p>Content, imagery, and listing health maintained across platforms so your catalog stays audit-ready and search-ready.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">◆</div>
+        <div class="service-num">06</div>
+        <h3>Cross-Border Operations</h3>
+        <p>Operational support for brands and distributors expanding beyond India, with the same discipline applied to every market.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-tag">How We Work</div>
+        <h2>A fixed sequence, run the same way every time.</h2>
+      </div>
+      <p>Structured onboarding means nothing falls through the cracks when a new marketplace, or a new brand, joins the desk.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="process-flow reveal">
+      <div class="process-step">
+        <div class="process-index">01 — Discover</div>
+        <h4>Audit</h4>
+        <p>We map every marketplace, SKU, and financial flow currently in play, and flag the gaps.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-index">02 — Integrate</div>
+        <h4>Onboard</h4>
+        <p>Accounts, catalogs, and invoicing systems are connected into a single operating view.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-index">03 — Operate</div>
+        <h4>Manage</h4>
+        <p>Day-to-day account management runs continuously across every active channel.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-index">04 — Reconcile</div>
+        <h4>Close the Books</h4>
+        <p>Orders, invoices, and payouts are matched and closed on a fixed monthly cycle.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-index">05 — Report</div>
+        <h4>Scale</h4>
+        <p>Clear reporting feeds the next decision — new platforms, new markets, new SKUs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="why-wrap">
+      <div class="why-visual reveal">
+        <div class="why-stat">
+          <div class="num">1</div>
+          <div class="lbl">Single point of accountability</div>
+        </div>
+        <div class="why-stat">
+          <div class="num">360°</div>
+          <div class="lbl">Coverage — strategy to reconciliation</div>
+        </div>
+        <div class="why-stat">
+          <div class="num">IN / Global</div>
+          <div class="lbl">Brands managed across markets</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="section-tag">Why Future Kart Solutions</div>
+        <h2 style="font-size:clamp(26px,3vw,38px);font-weight:400;max-width:480px;margin-bottom:40px;">Built by people who treat your P&amp;L like their own.</h2>
+        <div class="why-list">
+          <div class="why-item">
+            <span class="mark">i.</span>
+            <div><h4>One team, every marketplace</h4><p>No fragmented vendors — one desk owns strategy, operations, and finance together.</p></div>
+          </div>
+          <div class="why-item">
+            <span class="mark">ii.</span>
+            <div><h4>Financial accuracy, not just fulfilment</h4><p>Reconciliation and e-invoicing are core to how we operate, not an afterthought.</p></div>
+          </div>
+          <div class="why-item">
+            <span class="mark">iii.</span>
+            <div><h4>India-first, built for global brands too</h4><p>Deep expertise in Indian marketplaces, applied with the same rigour to brands operating abroad.</p></div>
+          </div>
+          <div class="why-item">
+            <span class="mark">iv.</span>
+            <div><h4>Transparent reporting, always</h4><p>You see what we see — the same ledger, the same numbers, no black box.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reach" id="reach">
+  <div class="wrap">
+    <div class="reach-grid">
+      <div class="reveal">
+        <div class="section-tag">Our Reach</div>
+        <h2>Managing brands across India, and beyond.</h2>
+        <p>We work with Indian brands scaling across domestic marketplaces and quick commerce, and with distributors taking established brands into new international markets.</p>
+        <div class="reach-tags">
+          <span>Indian D2C Brands</span>
+          <span>Marketplace Sellers</span>
+          <span>Quick Commerce</span>
+          <span>International Distributors</span>
+        </div>
+      </div>
+      <div class="reach-map reveal">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="none">
+          <line x1="120" y1="150" x2="260" y2="90" stroke="#c9a463" stroke-width="1" stroke-dasharray="3 4"/>
+          <line x1="120" y1="150" x2="300" y2="180" stroke="#c9a463" stroke-width="1" stroke-dasharray="3 4"/>
+          <line x1="120" y1="150" x2="90" y2="230" stroke="#c9a463" stroke-width="1" stroke-dasharray="3 4"/>
+        </svg>
+        <div class="pin" style="top:48%;left:28%;" data-label="India — HQ"></div>
+        <div class="pin" style="top:28%;left:64%;" data-label="Middle East"></div>
+        <div class="pin" style="top:58%;left:74%;" data-label="Southeast Asia"></div>
+        <div class="pin" style="top:75%;left:20%;" data-label="Domestic Network"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-wrap">
+      <div class="contact-left reveal">
+        <div class="section-tag">Get In Touch</div>
+        <h2>Let's put your operations on one ledger.</h2>
+        <p>Tell us where your business stands today — we'll come back with a clear view of what we can take off your plate.</p>
+        <div class="contact-detail">
+          <div><div class="k">Email</div><div class="v">hello@futurekartsolutions.com</div></div>
+          <div><div class="k">Phone</div><div class="v">+91 00000 00000</div></div>
+          <div><div class="k">Based In</div><div class="v">India — serving brands worldwide</div></div>
+        </div>
+      </div>
+      <form class="reveal" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='Request Sent ✓';">
+        <div class="two-col">
+          <div class="field"><label>Full Name</label><input type="text" required></div>
+          <div class="field"><label>Company</label><input type="text" required></div>
+        </div>
+        <div class="two-col">
+          <div class="field"><label>Email</label><input type="email" required></div>
+          <div class="field"><label>Phone</label><input type="tel"></div>
+        </div>
+        <div class="field">
+          <label>What do you need help with?</label>
+          <select>
+            <option>E-commerce / Quick Commerce Consulting</option>
+            <option>End-to-End Account Management</option>
+            <option>E-Invoicing</option>
+            <option>Reconciliation</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field"><label>Message</label><textarea></textarea></div>
+        <button class="btn btn-solid" type="submit" style="margin-top:6px;align-self:flex-start;border:none;cursor:pointer;">Request a Consultation</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="logo">
+        <div class="logo-mark">FK</div>
+        <div>
+          <div class="logo-text">FUTURE KART <span>SOLUTIONS</span></div>
+          <span class="logo-sub">OPERATIONS · INVOICING · RECONCILIATION</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#why">Why Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Future Kart Solutions. All rights reserved.</span>
+      <span>Mockup draft — content &amp; copy to be finalised</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal, .process-step').forEach(el=>io.observe(el));
+
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('navLinks');
+  if(toggle && nav){
+    toggle.addEventListener('click', ()=>{
+      nav.classList.toggle('open');
+    });
+    nav.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click', ()=> nav.classList.remove('open'));
+    });
+  }
+</script>
+
+</body>
+</html>
